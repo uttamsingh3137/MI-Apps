@@ -7,34 +7,38 @@ import {
   SettingOutlined,
   BellOutlined,
 } from "@ant-design/icons";
+import styled from "styled-components";
 
 const { Sider } = Layout;
 
+
+const StyledSider = styled(Sider)`
+  background: #fff !important;
+  border-right: 1px solid #eee;
+  padding-top: 10px;
+`;
+
+const Brand = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-bottom: 10px;
+`;
+
+const StyledMenu = styled(Menu)`
+  height: 100%;
+  border-right: none;
+`;
+
+
 const Sidebar: React.FC = () => {
   return (
-    <Sider
-      width={220}
-      style={{
-        background: "#fff",
-        borderRight: "1px solid #eee",
-        paddingTop: 10,
-      }}
-    >
-      <div
-        style={{
-          fontSize: 22,
-          fontWeight: "bold",
-          marginLeft: 20,
-          marginBottom: 10,
-        }}
-      >
-        Masters India
-      </div>
+    <StyledSider width={220}>
+      <Brand>Masters India</Brand>
 
-      <Menu
+      <StyledMenu
         mode="inline"
         defaultSelectedKeys={["dashboard"]}
-        style={{ height: "100%" }}
         items={[
           {
             key: "dashboard",
@@ -63,7 +67,7 @@ const Sidebar: React.FC = () => {
           },
         ]}
       />
-    </Sider>
+    </StyledSider>
   );
 };
 

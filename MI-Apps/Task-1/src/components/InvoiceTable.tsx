@@ -1,39 +1,28 @@
 import { Table, Dropdown, Button } from "antd";
-import { useEffect, useState } from "react";
+import styled from "styled-components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeOutlined, MoreOutlined } from "@ant-design/icons";
 import type { InvoiceData } from "../data/InvoiceData";
-import EditInvoiceDrawer from "./EditInvoiceDrawer";
+import { useState } from "react";
 
 interface InvoiceTableProps {
   data: InvoiceData[];
   onDelete: (record: InvoiceData) => void;
   onView: (record: InvoiceData) => void;
+  onEdit: (record: InvoiceData) => void;
 }
 
-const InvoiceTable = ({ data, onDelete, onView }: InvoiceTableProps) => {
+const TableWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+const InvoiceTable = ({
+  data,
+  onDelete,
+  onView,
+  onEdit,
+}: InvoiceTableProps) => {
   const [pageSize, setPageSize] = useState(10);
-
-  const [tableData, setTableData] = useState<InvoiceData[]>(data);
-
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [editRecord, setEditRecord] = useState<InvoiceData | null>(null);
-  useEffect(() => {
-    setTableData(data);
-  }, [data]);
-
-  const handleEdit = (record: InvoiceData) => {
-    setEditRecord(record);
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerSave = (updated: InvoiceData) => {
-    setEditRecord(updated);
-
-    setTableData((prev) =>
-      prev.map((row) => (row.id === updated.id ? updated : row))
-    );
-  };
 
   const columns: ColumnsType<InvoiceData> = [
     { title: "Invoice/Note No.", dataIndex: "invoiceNo", width: 150 },
@@ -51,7 +40,7 @@ const InvoiceTable = ({ data, onDelete, onView }: InvoiceTableProps) => {
       width: 100,
       render: (_, record) => {
         const items = [
-          { key: "edit", label: "Edit", onClick: () => handleEdit(record) },
+          { key: "edit", label: "Edit", onClick: () => onEdit(record) },
           {
             key: "delete",
             danger: true,
@@ -83,11 +72,11 @@ const InvoiceTable = ({ data, onDelete, onView }: InvoiceTableProps) => {
   ];
 
   return (
-    <>
+    <TableWrapper>
       <Table
         rowKey="id"
         columns={columns}
-        dataSource={tableData}
+        dataSource={data}
         pagination={{
           pageSize,
           showSizeChanger: true,
@@ -97,16 +86,8 @@ const InvoiceTable = ({ data, onDelete, onView }: InvoiceTableProps) => {
         }}
         rowSelection={{ type: "checkbox", fixed: false, columnWidth: 48 }}
         scroll={{ x: "max-content" }}
-        style={{ marginTop: 20 }}
       />
-
-      <EditInvoiceDrawer
-        open={drawerOpen}
-        record={editRecord}
-        onClose={() => setDrawerOpen(false)}
-        onSave={handleDrawerSave}
-      />
-    </>
+    </TableWrapper>
   );
 };
 

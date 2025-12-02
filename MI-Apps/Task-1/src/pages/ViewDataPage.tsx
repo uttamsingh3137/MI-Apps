@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import styled from "styled-components";
 import FilterBar, { type FilterValues } from "../components/FilterBar";
 
-function ViewDataPage() {
+const PageWrapper = styled.div`
+  padding: 20px;
+`;
 
+function ViewDataPage() {
   const [filters, setFilters] = useState<FilterValues>({
     search: "",
     businessUnit: "",
     returnPeriod: "",
     invoiceType: "",
   });
-
-  
-
-  const [activeType, setActiveType] = useState<"sales" | "purchase">("sales");
-
 
   const handleClear = () => {
     setFilters({
@@ -25,16 +24,16 @@ function ViewDataPage() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <PageWrapper>
       <h2>View Data</h2>
 
       <FilterBar
         filters={filters}
         onFilterChange={setFilters}
         onClear={handleClear}
-        activeType={activeType}
+        activeType="sales"
       />
-    </div>
+    </PageWrapper>
   );
 }
 

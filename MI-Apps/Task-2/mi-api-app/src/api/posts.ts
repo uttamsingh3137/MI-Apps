@@ -7,7 +7,14 @@ export interface PostItem {
   body: string;
 }
 
-export const getPosts = async () => {
-  const res = await axios.get<PostItem[]>("https://jsonplaceholder.typicode.com/posts");
-  return res.data;
+export const getPosts = async (): Promise<PostItem[]> => {
+  try {
+    const res = await axios.get<PostItem[]>(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+    return []; 
+  }
 };

@@ -1,16 +1,30 @@
 import { Tabs, Button } from "antd";
+import styled from "styled-components";
+
+interface HeaderTabsProps {
+  activeType: "sales" | "purchase";
+  setActiveType: (val: "sales" | "purchase") => void;
+  activeTab: string;
+  setActiveTab: (val: string) => void;
+}
+
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 8px;
+`;
 
 const HeaderTabs = ({
   activeType,
   setActiveType,
   activeTab,
   setActiveTab,
-}: {
-  activeType: "sales" | "purchase";
-  setActiveType: (val: "sales" | "purchase") => void;
-  activeTab: string;
-  setActiveTab: (val: string) => void;
-}) => {
+}: HeaderTabsProps) => {
   const tabItems = [
     { label: "Import Data", key: "import" },
     { label: "View Data", key: "view" },
@@ -18,20 +32,14 @@ const HeaderTabs = ({
   ];
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 20,
-      }}
-    >
+    <HeaderContainer>
       <Tabs
         activeKey={activeTab}
         items={tabItems}
         onChange={(key) => setActiveTab(key)}
       />
 
-      <div style={{ display: "flex", gap: 8 }}>
+      <ButtonGroup>
         <Button
           type={activeType === "sales" ? "primary" : "default"}
           onClick={() => setActiveType("sales")}
@@ -45,8 +53,8 @@ const HeaderTabs = ({
         >
           Purchase Data
         </Button>
-      </div>
-    </div>
+      </ButtonGroup>
+    </HeaderContainer>
   );
 };
 

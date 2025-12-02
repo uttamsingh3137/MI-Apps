@@ -1,64 +1,95 @@
 import React from "react";
 import { Input, Button, Space, Select } from "antd";
 import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
+import styled from "styled-components";
+import type { FilterValues } from "../../pages/Dashboard";
+
+
+const FilterBox = styled.div`
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+`;
+
+const TitleInput = styled(Input)`
+  width: 220px;
+`;
+
+const UserSelect = styled(Select)`
+  width: 150px;
+`;
+
+const BodyInput = styled(Input)`
+  width: 240px;
+`;
+
 
 interface Props {
-  filters: any;
-  setFilters: (obj: any) => void;
+  filters: FilterValues;
+  setFilters: (obj: FilterValues) => void;
   onApply: () => void;
   onClear: () => void;
 }
 
-const AdvancedFilters: React.FC<Props> = ({ filters, setFilters, onApply, onClear }) => {
-  return (
-    <div
-      style={{
-        padding: 16,
-        background: "#fff",
-        marginBottom: 12,
-        borderRadius: 8,
-        boxShadow: "0 2px 4px rgba(0,0,0,0.05)"
-      }}
-    >
-      <Space wrap>
 
-        <Input
+const AdvancedFilters: React.FC<Props> = ({
+  filters,
+  setFilters,
+  onApply,
+  onClear,
+}) => {
+  const update = (field: keyof FilterValues, value: string | number | null) => {
+    setFilters({
+      ...filters,
+      [field]: value,
+    });
+  };
+
+  return (
+    <FilterBox>
+      <Space wrap size="middle">
+
+       
+        <TitleInput
           placeholder="Search title..."
           value={filters.title}
-          onChange={(e) => setFilters({ ...filters, title: e.target.value })}
-          style={{ width: 220 }}
+          onChange={(e) => update("title", e.target.value)}
         />
 
-        <Select
+
+        <UserSelect
           placeholder="User ID"
           allowClear
-          style={{ width: 150 }}
-          value={filters.userId}
-          onChange={(v) => setFilters({ ...filters, userId: v })}
+          value={filters.userId ?? undefined}
+          onChange={(v) => update("userId", v ?? null)}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((u) => (
             <Select.Option key={u} value={u}>
               {u}
             </Select.Option>
           ))}
-        </Select>
+        </UserSelect>
 
-        <Input
+
+        <BodyInput
           placeholder="Search in body..."
           value={filters.body}
-          onChange={(e) => setFilters({ ...filters, body: e.target.value })}
-          style={{ width: 240 }}
+          onChange={(e) => update("body", e.target.value)}
         />
+
 
         <Button type="primary" icon={<FilterOutlined />} onClick={onApply}>
           Apply
         </Button>
 
+
         <Button icon={<ReloadOutlined />} onClick={onClear}>
           Reset
         </Button>
       </Space>
-    </div>
+    </FilterBox>
   );
 };
 

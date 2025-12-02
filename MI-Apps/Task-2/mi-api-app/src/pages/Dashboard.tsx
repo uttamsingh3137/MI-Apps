@@ -3,25 +3,37 @@ import AppLayout from "../layout/AppLayout";
 import AdvancedFilters from "../components/Filters/AdvancedFilters";
 import AdvancedPostsTable from "../components/PostsTable/AdvancedPostsTable";
 import { getPosts, type PostItem } from "../api/posts";
+import ApiDashboardModal from "../api/ApiDashboardModal";
+
+export interface FilterValues {
+  title: string;
+  userId: number | null;
+  body: string;
+}
 
 const Dashboard: React.FC = () => {
   const [allPosts, setAllPosts] = useState<PostItem[]>([]);
   const [filtered, setFiltered] = useState<PostItem[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [filters, setFilters] = useState({
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+
+  const [filters, setFilters] = useState<FilterValues>({
     title: "",
-    userId: null as number | null,
-    body: ""
+    userId: null,
+    body: "",
   });
 
   useEffect(() => {
     const load = async () => {
-      setLoading(true);
-      const posts = await getPosts();
-      setAllPosts(posts);
-      setFiltered(posts);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const posts = await getPosts();
+        setAllPosts(posts);
+        setFiltered(posts);
+      } finally {
+        setLoading(false);
+      }
     };
     load();
   }, []);
@@ -29,43 +41,57 @@ const Dashboard: React.FC = () => {
   const applyFilter = () => {
     let result = allPosts;
 
-    if (filters.title)
+    if (filters.title.trim()) {
       result = result.filter((p) =>
         p.title.toLowerCase().includes(filters.title.toLowerCase())
       );
+    }
 
-    if (filters.userId)
+    if (filters.userId !== null) {
       result = result.filter((p) => p.userId === filters.userId);
+    }
 
-    if (filters.body)
+    if (filters.body.trim()) {
       result = result.filter((p) =>
         p.body.toLowerCase().includes(filters.body.toLowerCase())
       );
+    }
 
     setFiltered(result);
   };
 
-  const clearFilters = () => {
-    setFilters({ title: "", userId: null, body: "" });
+  const clearFilter = () => {
+    const empty: FilterValues = { title: "", userId: null, body: "" };
+    setFilters(empty);
     setFiltered(allPosts);
   };
 
-  const viewItem = (item: PostItem) => alert(item.title);
+  const openDashboard = () => setDashboardOpen(true);
+
+  const viewItem = (item: PostItem) => {
+    alert(`Viewing: ${item.title}`);
+  };
 
   return (
     <AppLayout>
+
       <AdvancedFilters
         filters={filters}
         setFilters={setFilters}
         onApply={applyFilter}
-        onClear={clearFilters}
+        onClear={clearFilter}
       />
 
-      {/* TABLE ONLY — no heading */}
       <AdvancedPostsTable
         data={filtered}
         loading={loading}
         onView={viewItem}
+        onOpenDashboard={openDashboard}
+      />
+
+      <ApiDashboardModal
+        open={dashboardOpen}
+        onClose={() => setDashboardOpen(false)}
       />
     </AppLayout>
   );

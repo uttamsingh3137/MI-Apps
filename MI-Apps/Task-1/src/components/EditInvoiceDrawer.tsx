@@ -1,4 +1,6 @@
 import { Drawer, Form, Input, Button } from "antd";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
 import type { InvoiceData } from "../data/InvoiceData";
 
 interface EditInvoiceDrawerProps {
@@ -8,17 +10,27 @@ interface EditInvoiceDrawerProps {
   onSave: (updated: InvoiceData) => void;
 }
 
-const EditInvoiceDrawer = ({
-  open,
-  record,
-  onClose,
-  onSave,
-}: EditInvoiceDrawerProps) => {
-  if (!record) return null;
+const ReadOnlyInput = styled(Input)`
+  background: #f5f5f5 !important;
+  cursor: not-allowed;
+`;
+
+const SaveButton = styled(Button)`
+  margin-top: 20px;
+`;
+
+const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerProps) => {
+  const [localRecord, setLocalRecord] = useState<InvoiceData | null>(record);
+
+  // Update local state whenever record changes
+  useEffect(() => {
+    setLocalRecord(record);
+  }, [record]);
+
+  if (!localRecord) return null;
 
   const handleChange = (field: keyof InvoiceData, value: string) => {
-    if (!record) return;
-    onSave({ ...record, [field]: value });
+    setLocalRecord({ ...localRecord, [field]: value });
   };
 
   return (
@@ -27,99 +39,57 @@ const EditInvoiceDrawer = ({
       width={720}
       open={open}
       onClose={onClose}
+      destroyOnClose
     >
       <Form layout="vertical">
         <Form.Item label="Invoice No">
-          <Input
-            value={record.invoiceNo}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.invoiceNo} readOnly />
         </Form.Item>
 
         <Form.Item label="Invoice Date">
-          <Input
-            value={record.invoiceDate}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.invoiceDate} readOnly />
         </Form.Item>
 
         <Form.Item label="Invoice Type">
-          <Input
-            value={record.invoiceType}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.invoiceType} readOnly />
         </Form.Item>
 
         <Form.Item label="Taxable Value">
-          <Input
-            value={record.taxableValue}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.taxableValue} readOnly />
         </Form.Item>
 
         <Form.Item label="Invoice Value">
-          <Input
-            value={record.invoiceValue}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.invoiceValue} readOnly />
         </Form.Item>
 
         <Form.Item label="Customer Name">
-          <Input
-            value={record.customerName}
-            readOnly
-            style={{
-              background: "#f5f5f5",
-              cursor: "not-allowed",
-            }}
-          />
+          <ReadOnlyInput value={localRecord.customerName} readOnly />
         </Form.Item>
 
-        {/* Editable */}
+        {/* Editable fields */}
         <Form.Item label="Customer GSTIN">
           <Input
-            value={record.customerGstin}
+            value={localRecord.customerGstin}
             onChange={(e) => handleChange("customerGstin", e.target.value)}
           />
         </Form.Item>
 
         <Form.Item label="Supplier GSTIN">
           <Input
-            value={record.supplierGstin}
+            value={localRecord.supplierGstin}
             onChange={(e) => handleChange("supplierGstin", e.target.value)}
           />
         </Form.Item>
 
-        <Button
+        <SaveButton
           type="primary"
-          style={{ marginTop: 20 }}
           onClick={() => {
-            onSave(record);
+            onSave(localRecord);
             onClose();
           }}
         >
           Save Changes
-        </Button>
+        </SaveButton>
       </Form>
     </Drawer>
   );
