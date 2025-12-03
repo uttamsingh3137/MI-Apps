@@ -21,9 +21,9 @@ const InvoiceViewDrawer = ({ open, data, onClose }: InvoiceViewDrawerProps) => {
     <Drawer
       title={data ? `Invoice Details – ${data.invoiceNo}` : "Invoice Details"}
       open={open}
-      width={480}
+      size={480} //************** */
       onClose={onClose}
-      destroyOnClose
+      // destroyOnClose
     >
       {data && (
         <StyledDescriptions size="small" column={1} bordered>

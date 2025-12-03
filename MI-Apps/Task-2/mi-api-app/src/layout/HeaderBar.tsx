@@ -100,7 +100,7 @@ const HeaderBar: React.FC = () => {
       <Drawer
         title="Notifications"
         placement="right"
-        width={350}
+        size={350}
         open={notifOpen}
         onClose={() => setNotifOpen(false)}
       >

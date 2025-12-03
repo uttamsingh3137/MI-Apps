@@ -27,8 +27,16 @@ const PostsPage: React.FC = () => {
   const [filters, setFilters] = useState<FilterValues>({
     title: "",
     userId: null,
-    body: ""
+    body: "",
   });
+
+  
+  const openDashboard = (item: PostItem) => {
+    console.log("Dashboard item:", item);
+
+  };
+
+
 
   useEffect(() => {
     const load = async () => {
@@ -96,7 +104,17 @@ const PostsPage: React.FC = () => {
         onClear={clearFilter}
       />
 
-      <AdvancedPostsTable data={filtered} loading={loading} onView={viewPost} />
+      <AdvancedPostsTable
+        data={filtered}
+        loading={loading}
+        onView={viewPost}
+        onOpenDashboard={openDashboard}
+      />
+      {/* data,
+       loading,
+      onView,
+      onOpenDashboard, */}
+      {/* //prop - 3/4 */}
     </PageWrapper>
   );
 };

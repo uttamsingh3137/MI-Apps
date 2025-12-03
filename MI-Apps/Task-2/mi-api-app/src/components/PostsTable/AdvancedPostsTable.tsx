@@ -70,11 +70,12 @@ const AdvancedPostsTable: React.FC<Props> = ({
             ),
             onClick: () => onView(record),
           },
-          {
+          record.id%2===0 && {
             key: "dashboard",
             label: (
               <>
-                <BarChartOutlined /> Open Dashboard
+                <BarChartOutlined />
+                 Dashboard
               </>
             ),
             onClick: () => onOpenDashboard(record),
