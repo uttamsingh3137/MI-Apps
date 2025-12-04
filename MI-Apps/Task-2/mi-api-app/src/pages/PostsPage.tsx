@@ -3,21 +3,13 @@ import { Modal, message } from "antd";
 import { getPosts, type PostItem } from "../api/posts";
 import AdvancedFilters from "../components/Filters/AdvancedFilters";
 import AdvancedPostsTable from "../components/PostsTable/AdvancedPostsTable";
-import styled from "styled-components";
+import { PageWrapper, Title } from "../Styled/PostsPage.styled";
+import type { FilterValues } from "../Constants/Interfaces/PostPage.interface";
 
-const PageWrapper = styled.div`
-  padding: 20px;
-`;
 
-const Title = styled.h2`
-  margin-bottom: 20px;
-`;
 
-export interface FilterValues {
-  title: string;
-  userId: number | null;
-  body: string;
-}
+
+
 
 const PostsPage: React.FC = () => {
   const [allPosts, setAllPosts] = useState<PostItem[]>([]);

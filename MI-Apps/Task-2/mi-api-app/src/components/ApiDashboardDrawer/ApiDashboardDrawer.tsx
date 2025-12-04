@@ -1,14 +1,16 @@
 import React from "react";
-import { Row, Col, Select, DatePicker, Button, Space, Drawer } from "antd";
+import { Row, Col, Select, DatePicker, Drawer } from "antd";
 import {
   PieChart,
   Pie,
   Cell,
   // Tooltip,
   Legend,
-  type PieLabelRenderProps,
 } from "recharts";
-import styled from "styled-components";
+// import styled from "styled-components";
+import { FilterBar , CardBox ,CardTitle , StatsText , StyledSelect , StyledButton} from "../../Styled/ApiDashboard.styled";
+import renderCustomizedLabel from "./Customised Label/CustomisedLabel";
+import type { Props } from "../../Constants/Interfaces/ApiDashboard.interface";
 
 //modal to drawer
 //visible to only status -published
@@ -17,78 +19,14 @@ import styled from "styled-components";
 
 const { RangePicker } = DatePicker;
 
-const FilterBar = styled(Space)`
-  margin-bottom: 20px;
-`;
 
-const CardBox = styled.div`
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
 
-const CardTitle = styled.h3`
-  margin-bottom: 12px;
-`;
 
-const StatsText = styled.div`
-  margin-top: 10px;
-  font-size: 15px;
-`;
-
-const StyledSelect = styled(Select)`
-  width: 200px;
-`;
-
-const StyledButton = styled(Button)`
-  min-width: 110px;
-`;
-
-interface Props {
-  open: boolean;
-  onClose: () => void;
-}
 
 //rechart - customized label
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  payload,
-}: PieLabelRenderProps) => {
-  if (!cx || !cy || !innerRadius || !outerRadius) return null;
 
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.55;
-  const x = cx + radius * Math.cos(-(midAngle ?? 1) * RADIAN);
-  const y = cy + radius * Math.sin(-(midAngle ?? 1) * RADIAN);
 
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor="middle"
-      dominantBaseline="central"
-      fontSize={12}
-      fontWeight="bold"
-    >
-      <tspan x={x} dy="-4">
-        {payload?.name}
-      </tspan>
-      <tspan x={x} dy="12">
-        {payload?.value} ({((percent ?? 0) * 100).toFixed(0)}%)
-      </tspan>
-    </text>
-  );
-};
-
-const ApiDashboardModal: React.FC<Props> = ({ open, onClose }) => {
+const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
   const allottedData = [
     { name: "Consumed", value: 40 },
     { name: "Remaining", value: 40 },
@@ -198,4 +136,4 @@ const ApiDashboardModal: React.FC<Props> = ({ open, onClose }) => {
   );
 };
 
-export default ApiDashboardModal;
+export default ApiDashboardDrawer;

@@ -4,16 +4,16 @@ import type { ColumnsType } from "antd/es/table";
 import { EyeOutlined, MoreOutlined } from "@ant-design/icons";
 import type { InvoiceData } from "../data/InvoiceData";
 import { useState } from "react";
+import type { InvoiceTableProps } from "../Constants/Interface/InvoiceTable.interface";
 
-interface InvoiceTableProps {
-  data: InvoiceData[];
-  onDelete: (record: InvoiceData) => void;
-  onView: (record: InvoiceData) => void;
-  onEdit: (record: InvoiceData) => void;
-}
+
 
 const TableWrapper = styled.div`
   margin-top: 20px;
+  .ant-table-pagination {
+    display: flex !important;
+    justify-content: center !important;
+  }
 `;
 
 const InvoiceTable = ({

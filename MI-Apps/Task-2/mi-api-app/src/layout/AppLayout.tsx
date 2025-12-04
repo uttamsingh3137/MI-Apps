@@ -1,27 +1,13 @@
-import React from "react";
-import { Layout } from "antd";
-import styled from "styled-components";
 import Sidebar from "./SideBar";
 import HeaderBar from "./HeaderBar";
+import { Outlet } from "react-router-dom";
+import {
+  FullLayout,
+  MainLayout,
+  StyledContent,
+} from "../Styled/AppLayout.styled";
 
-const { Content } = Layout;
-
-
-const FullLayout = styled(Layout)`
-  min-height: 100vh;
-`;
-
-const MainLayout = styled(Layout)`
-  background: #f5f7fa;
-`;
-
-const StyledContent = styled(Content)`
-  padding: 20px;
-  background: #f5f7fa;
-`;
-
-
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = () => {
   return (
     <FullLayout>
       <Sidebar />
@@ -29,7 +15,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <MainLayout>
         <HeaderBar />
 
-        <StyledContent>{children}</StyledContent>
+        <StyledContent>
+          <Outlet />
+        </StyledContent>
       </MainLayout>
     </FullLayout>
   );

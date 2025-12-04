@@ -1,10 +1,7 @@
 import { useState } from "react";
-import styled from "styled-components";
 import FilterBar, { type FilterValues } from "../components/FilterBar";
+import { PageWrapper } from "../Styled/ViewDataPage.styled";
 
-const PageWrapper = styled.div`
-  padding: 20px;
-`;
 
 function ViewDataPage() {
   const [filters, setFilters] = useState<FilterValues>({

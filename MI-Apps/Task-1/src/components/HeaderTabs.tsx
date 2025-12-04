@@ -1,23 +1,10 @@
 import { Tabs, Button } from "antd";
-import styled from "styled-components";
+import { ButtonGroup, HeaderContainer } from "../Styled/HeaderTabs.styled";
+import type { HeaderTabsProps } from "../Constants/Interface/HeaderTabs.interface";
 
-interface HeaderTabsProps {
-  activeType: "sales" | "purchase";
-  setActiveType: (val: "sales" | "purchase") => void;
-  activeTab: string;
-  setActiveTab: (val: string) => void;
-}
 
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 8px;
-`;
+
 
 const HeaderTabs = ({
   activeType,

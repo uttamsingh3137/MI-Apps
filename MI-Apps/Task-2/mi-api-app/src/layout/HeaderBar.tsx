@@ -1,75 +1,57 @@
 import React, { useState } from "react";
-import { Layout, Space, Badge, Drawer, Popover, Menu, Dropdown } from "antd";
-import {
-  SearchOutlined,
-  BellOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import styled from "styled-components";
-
-const { Header } = Layout;
+import {  Space, Badge, Drawer, Popover, Dropdown, message } from "antd";
+import { SearchOutlined, BellOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
+import appRoutes from "../config/menuConfig";
+import { HeaderIcon, StyledHeader, TitleText } from "../Styled/HeaderBar.styled";
+import { userMenuItems } from "../Constants/Interfaces/HeaderBar.interface";
 
 
-const StyledHeader = styled(Header)`
-  background: #fff !important;
-  padding: 0 20px !important;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #eee;
-`;
-
-const TitleText = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const HeaderIcon = styled.span`
-  font-size: 20px;
-  cursor: pointer;
-`;
-
-
-const userMenuItems = [
-  { key: "profile", label: "My Profile" },
-  { key: "settings", label: "Settings" },
-  { type: "divider" as const },
-  { key: "logout", danger: true, label: "Logout" },
-];
 
 
 const HeaderBar: React.FC = () => {
   const [notifOpen, setNotifOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const onUserMenuClick = (info: any) => {
-    if (info.key === "logout") {
-      alert("Logged out!");
-    } else {
-      alert(`Clicked: ${info.key}`);
-    }
+  const location = useLocation();
+
+  const findRoute = () => {
+    const pathname = location.pathname;
+    const exact = appRoutes.find((r) => r.path === pathname);
+    if (exact) return exact;
+    const prefix = appRoutes.find((r) => r.path !== "/" && pathname.startsWith(r.path));
+    if (prefix) return prefix;
+    return appRoutes.find((r) => r.key === "home");
+  };
+
+  const currentRoute = findRoute();
+  const currentTitle = currentRoute?.title ?? currentRoute?.label ?? "Masters India";
+
+  const onUserMenuClick = () => {
+    message.success("Coming Soon" , 3)
   };
 
   return (
     <StyledHeader>
-      
       <Space>
         <HeaderIcon>
           <SearchOutlined />
         </HeaderIcon>
-        <TitleText>Dashboard</TitleText>
+
+       
+        <TitleText>
+          {/* <Link to="/" style={{ color: "inherit", textDecoration: "none" }}> */}
+            {currentTitle}
+          {/* </Link> */}
+        </TitleText>
       </Space>
 
-
       <Space size="large">
-        {/* Notifications Icon */}
         <Badge count={3} size="small">
           <HeaderIcon onClick={() => setNotifOpen(true)}>
             <BellOutlined />
           </HeaderIcon>
         </Badge>
-
 
         <Popover
           title="Quick Settings"
@@ -89,7 +71,6 @@ const HeaderBar: React.FC = () => {
           </HeaderIcon>
         </Popover>
 
-
         <Dropdown menu={{ items: userMenuItems, onClick: onUserMenuClick }} trigger={["click"]}>
           <HeaderIcon>
             <UserOutlined />
@@ -97,13 +78,7 @@ const HeaderBar: React.FC = () => {
         </Dropdown>
       </Space>
 
-      <Drawer
-        title="Notifications"
-        placement="right"
-        size={350}
-        open={notifOpen}
-        onClose={() => setNotifOpen(false)}
-      >
+      <Drawer title="Notifications" placement="right" size={350} open={notifOpen} onClose={() => setNotifOpen(false)}>
         <p>🔔 New form update available</p>
         <p>🔔 Scheduled maintenance tomorrow</p>
         <p>🔔 Your GST filing is due soon</p>

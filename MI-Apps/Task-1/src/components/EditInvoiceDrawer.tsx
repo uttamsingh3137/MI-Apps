@@ -1,46 +1,58 @@
-import { Drawer, Form, Input, Button } from "antd";
-import styled from "styled-components";
+import { Drawer, Form, Input } from "antd";
+
 import { useEffect, useState } from "react";
 import type { InvoiceData } from "../data/InvoiceData";
+import { ReadOnlyInput, SaveButton } from "../Styled/EditInvoiceDrawer.styled";
+import type { EditInvoiceDrawerProps } from "../Constants/Interface/EditInvoiceDrawer.interface";
 
-interface EditInvoiceDrawerProps {
-  open: boolean;
-  record: InvoiceData | null;
-  onClose: () => void;
-  onSave: (updated: InvoiceData) => void;
-}
 
-const ReadOnlyInput = styled(Input)`
-  background: #f5f5f5 !important;
-  cursor: not-allowed;
-`;
 
-const SaveButton = styled(Button)`
-  margin-top: 20px;
-`;
 
 const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerProps) => {
-  const [localRecord, setLocalRecord] = useState<InvoiceData | null>(record);
 
-  // Update local state whenever record changes
+  const [localRecord, setLocalRecord] = useState<InvoiceData | null>(record);
+  const [customerError, setCustomerError] = useState("");
+  const [supplierError, setSupplierError] = useState("");
+
+  // Update krne ke liye local state whenever record changes
   useEffect(() => {
     setLocalRecord(record);
   }, [record]);
 
   if (!localRecord) return null;
 
+
+  const validateGST = (field: "customer" | "supplier", value: string) => {
+    if (field === "customer") {
+      if (!value.trim()) {
+        setCustomerError("Customer GSTIN cannot be empty");
+      } else if (value === localRecord.supplierGstin) {
+        setCustomerError("Customer & Supplier GSTIN cannot be the same");
+      } else {
+        setCustomerError("");
+      }
+    }
+
+    if (field === "supplier") {
+      if (!value.trim()) {
+        setSupplierError("Supplier GSTIN cannot be empty");
+      } else if (value === localRecord.customerGstin) {
+        setSupplierError("Supplier & Customer GSTIN cannot be the same");
+      } else {
+        setSupplierError("");
+      }
+    }
+  };
+
   const handleChange = (field: keyof InvoiceData, value: string) => {
     setLocalRecord({ ...localRecord, [field]: value });
+
+    if (field === "customerGstin") validateGST("customer", value);
+    if (field === "supplierGstin") validateGST("supplier", value);
   };
 
   return (
-    <Drawer
-      title="Edit Invoice Details"
-      width={720}
-      open={open}
-      onClose={onClose}
-      destroyOnClose
-    >
+    <Drawer title="Edit Invoice Details" size={720} open={open} onClose={onClose}>
       <Form layout="vertical">
         <Form.Item label="Invoice No">
           <ReadOnlyInput value={localRecord.invoiceNo} readOnly />
@@ -66,15 +78,23 @@ const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerP
           <ReadOnlyInput value={localRecord.customerName} readOnly />
         </Form.Item>
 
-        {/* Editable fields */}
-        <Form.Item label="Customer GSTIN">
+        {/* Editable fields with validation */}
+        <Form.Item
+          label="Customer GSTIN"
+          validateStatus={customerError ? "error" : ""}
+          help={customerError}
+        >
           <Input
             value={localRecord.customerGstin}
             onChange={(e) => handleChange("customerGstin", e.target.value)}
           />
         </Form.Item>
 
-        <Form.Item label="Supplier GSTIN">
+        <Form.Item
+          label="Supplier GSTIN"
+          validateStatus={supplierError ? "error" : ""}
+          help={supplierError}
+        >
           <Input
             value={localRecord.supplierGstin}
             onChange={(e) => handleChange("supplierGstin", e.target.value)}
@@ -83,6 +103,7 @@ const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerP
 
         <SaveButton
           type="primary"
+          disabled={!!customerError || !!supplierError}  //prop - disable ki conditions pass krne ke liyee
           onClick={() => {
             onSave(localRecord);
             onClose();

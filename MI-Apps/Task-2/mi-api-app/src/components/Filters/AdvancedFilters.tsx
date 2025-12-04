@@ -1,29 +1,11 @@
 import React from "react";
-import { Input, Button, Space, Select } from "antd";
+import { Button, Space, Select } from "antd";
 import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
-import styled from "styled-components";
-import type { FilterValues } from "../../pages/Dashboard";
+import { BodyInput, FilterBox, TitleInput, UserSelect } from "../../Styled/AdvancedFilters.styled";
+import type { FilterValues } from "../../Constants/Interfaces/PostPage.interface";
+import { USER_ID_OPTIONS } from "../../Constants/SelectOptionsArray/userIdOptions";
 
 
-const FilterBox = styled.div`
-  padding: 16px;
-  background: #fff;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-`;
-
-const TitleInput = styled(Input)`
-  width: 220px;
-`;
-
-const UserSelect = styled(Select)`
-  width: 150px;
-`;
-
-const BodyInput = styled(Input)`
-  width: 240px;
-`;
 
 
 interface Props {
@@ -65,7 +47,7 @@ const AdvancedFilters: React.FC<Props> = ({
           value={filters.userId ?? undefined}
           onChange={(v) => update("userId", v ?? null)}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((u) => (
+          {USER_ID_OPTIONS.map((u) => (
             <Select.Option key={u} value={u}>
               {u}
             </Select.Option>

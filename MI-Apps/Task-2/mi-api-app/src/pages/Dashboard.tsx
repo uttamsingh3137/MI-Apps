@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AppLayout from "../layout/AppLayout";
 import AdvancedFilters from "../components/Filters/AdvancedFilters";
 import AdvancedPostsTable from "../components/PostsTable/AdvancedPostsTable";
 import { getPosts, type PostItem } from "../api/posts";
-import ApiDashboardModal from "../api/ApiDashboardModal";
+// import ApiDashboardModal from "../api/ApiDashboardModal";
+import ApiDashboardDrawer from "../components/ApiDashboardDrawer/ApiDashboardDrawer";
+import type { FilterValues } from "../Constants/Interfaces/Dashboard.interface";
 
-export interface FilterValues {
-  title: string;
-  userId: number | null;
-  body: string;
-}
 
 const Dashboard: React.FC = () => {
   const [allPosts, setAllPosts] = useState<PostItem[]>([]);
@@ -73,7 +69,8 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <AppLayout>
+    <>
+
 
       <AdvancedFilters
         filters={filters}
@@ -89,11 +86,14 @@ const Dashboard: React.FC = () => {
         onOpenDashboard={openDashboard}
       />
 
-      <ApiDashboardModal
+      <ApiDashboardDrawer
         open={dashboardOpen}
         onClose={() => setDashboardOpen(false)}
       />
-    </AppLayout>
+
+
+      </>
+
   );
 };
 

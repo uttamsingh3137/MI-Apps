@@ -1,56 +1,11 @@
-import { Row, Col, Input, Select, Button } from "antd";
+import { Row, Col, Button } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import styled from "styled-components";
 import { useMemo, useState } from "react";
+import { IconWrapper, SpacedRow, StyledInput, StyledSelect, ToggleButton, Wrapper } from "../Styled/FilterBar.styled";
+import type { FilterBarProps, FilterValues } from "../Constants/Interface/FilterBar.interface";
 
-export interface FilterValues {
-  search: string;
-  businessUnit: string | null;
-  returnPeriod: string | null;
-  invoiceType: string | null;
-}
 
-interface FilterBarProps {
-  filters: FilterValues;
-  onFilterChange: (filters: FilterValues) => void;
-  onClear: () => void;
-  onApply?: () => void;       
-  activeType: "sales" | "purchase";
-}
 
-const Wrapper = styled.div`
-  width: 100%;
-  padding: 16px;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  background: #fff;
-`;
-
-const ToggleButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`;
-
-const IconWrapper = styled.span`
-  font-size: 12px;
-  opacity: 0.7;
-`;
-
-const StyledInput = styled(Input)`
-  height: 38px;
-  border-radius: 6px;
-`;
-
-const StyledSelect = styled(Select)`
-  width: 100%;
-  height: 38px;
-`;
-
-const SpacedRow = styled(Row)`
-  margin-top: 20px;
-`;
 
 const FilterBar = ({
   filters,

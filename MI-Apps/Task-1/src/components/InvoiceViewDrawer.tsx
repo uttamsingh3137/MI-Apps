@@ -1,20 +1,10 @@
 import { Drawer, Descriptions } from "antd";
-import styled from "styled-components";
-import type { InvoiceData } from "../data/InvoiceData";
+import { StyledDescriptions } from "../Styled/InvoiceViewDrawer.styled";
+import type { InvoiceViewDrawerProps } from "../Constants/Interface/InvoiceViewDrawer.interface";
 
-interface InvoiceViewDrawerProps {
-  open: boolean;
-  data: InvoiceData | null;
-  onClose: () => void;
-}
 
-const StyledDescriptions = styled(Descriptions)`
-  margin-top: 8px;
 
-  .ant-descriptions-item-label {
-    font-weight: 600;
-  }
-`;
+
 
 const InvoiceViewDrawer = ({ open, data, onClose }: InvoiceViewDrawerProps) => {
   return (
@@ -23,7 +13,7 @@ const InvoiceViewDrawer = ({ open, data, onClose }: InvoiceViewDrawerProps) => {
       open={open}
       size={480} //************** */
       onClose={onClose}
-      // destroyOnClose
+      // destroyOnClose - never use
     >
       {data && (
         <StyledDescriptions size="small" column={1} bordered>

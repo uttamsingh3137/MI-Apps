@@ -2,23 +2,13 @@ import React from "react";
 import { Table, Button, Dropdown, Tag } from "antd";
 import { MoreOutlined, EyeOutlined, CopyOutlined, BarChartOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
-import styled from "styled-components";
 import type { PostItem } from "../../api/posts";
-
-interface Props {
-  data: PostItem[];
-  loading: boolean;
-  onView: (item: PostItem) => void;
-  onOpenDashboard: (item: PostItem) => void;
-}
+import { TableWrapper } from "../../Styled/AdvancedPostTable.styled";
+import type { Props } from "../../Constants/Interfaces/AdvancedPostsTable.interface";
 
 
-const TableWrapper = styled.div`
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-`;
+
+
 
 
 const AdvancedPostsTable: React.FC<Props> = ({
@@ -115,6 +105,7 @@ const AdvancedPostsTable: React.FC<Props> = ({
           defaultPageSize: 10,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50"],
+          // align: "center", - not working
         }}
         scroll={{ y: 450 }}
       />
