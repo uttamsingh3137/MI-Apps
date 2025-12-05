@@ -1,6 +1,7 @@
 import { useState } from "react";
-import FilterBar, { type FilterValues } from "../components/FilterBar";
+import FilterBar from "../components/FilterBar";
 import { PageWrapper } from "../Styled/ViewDataPage.styled";
+import type { FilterValues } from "../Constants/Interface/FilterBar.interface";
 
 
 function ViewDataPage() {

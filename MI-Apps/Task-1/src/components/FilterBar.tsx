@@ -16,7 +16,7 @@ const FilterBar = ({
 }: FilterBarProps) => {
   const [showFilters, setShowFilters] = useState(true);
 
-  const updateField = (field: keyof FilterValues, value: string | null | undefined) => {
+  const updateField = (field: keyof FilterValues, value: unknown ) => {
     onFilterChange({
       ...filters,
       [field]: value ?? null,
@@ -93,7 +93,7 @@ const FilterBar = ({
                 value={filters.businessUnit ?? undefined}
                 allowClear
                 options={businessUnitOptions}
-                onChange={(v) => updateField("businessUnit", v)}
+                onChange={(v) => updateField("businessUnit", v )}
               />
             </Col>
 

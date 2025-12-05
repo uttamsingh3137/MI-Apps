@@ -9,4 +9,21 @@ export const TableWrapper = styled.div`
     display: flex;
     justify-content: center;  
   }
+
+  .ant-pagination-total-text {
+    order: -1;
+    margin-right: auto;
+    align-self: center;
+  }
+  
+  .ant-pagination-options {
+    order: 1;
+    margin-left: auto;
+    align-self: center;
+  }
+  
+  .ant-pagination {
+    order: 0;
+    margin: 0 auto;
+  }
 `;

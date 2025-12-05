@@ -1,15 +1,15 @@
 import React from "react";
 import { Table, Button, Dropdown, Tag } from "antd";
-import { MoreOutlined, EyeOutlined, CopyOutlined, BarChartOutlined } from "@ant-design/icons";
+import {
+  MoreOutlined,
+  EyeOutlined,
+  CopyOutlined,
+  BarChartOutlined,
+} from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import type { PostItem } from "../../api/posts";
 import { TableWrapper } from "../../Styled/AdvancedPostTable.styled";
 import type { Props } from "../../Constants/Interfaces/AdvancedPostsTable.interface";
-
-
-
-
-
 
 const AdvancedPostsTable: React.FC<Props> = ({
   data,
@@ -60,16 +60,17 @@ const AdvancedPostsTable: React.FC<Props> = ({
             ),
             onClick: () => onView(record),
           },
-          record.id%2===0 && {
-            key: "dashboard",
-            label: (
-              <>
-                <BarChartOutlined />
-                 Dashboard
-              </>
-            ),
-            onClick: () => onOpenDashboard(record),
-          },
+          record.id % 2 === 0
+            ? {
+                key: "dashboard",
+                label: (
+                  <>
+                    <BarChartOutlined /> Dashboard
+                  </>
+                ),
+                onClick: () => onOpenDashboard(record),
+              }
+            : null,
           {
             key: "copy",
             label: (
@@ -79,7 +80,7 @@ const AdvancedPostsTable: React.FC<Props> = ({
             ),
             onClick: () => navigator.clipboard.writeText(record.id.toString()),
           },
-        ];
+        ].filter(Boolean);
 
         return (
           <Dropdown
@@ -105,6 +106,8 @@ const AdvancedPostsTable: React.FC<Props> = ({
           defaultPageSize: 10,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50"],
+          position: ["bottomCenter"],
+          showTotal: (total) => `Total ${total} items`,
           // align: "center", - not working
         }}
         scroll={{ y: 450 }}

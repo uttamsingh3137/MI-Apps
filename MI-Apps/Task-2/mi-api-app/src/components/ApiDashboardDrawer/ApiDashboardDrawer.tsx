@@ -1,20 +1,7 @@
 import React from "react";
 import { Row, Col, Drawer } from "antd";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  // Tooltip,
-  Legend,
-} from "recharts";
-// import styled from "styled-components";
-import {
-  CardBox,
-  CardTitle,
-  StatsText,
-} from "../../Styled/ApiDashboard.styled";
-import renderCustomizedLabel from "./Customised Label/CustomisedLabel";
 import type { Props } from "../../Constants/Interfaces/ApiDashboard.interface";
+import DashboardPieCard from "./PieCard/DashboardPieCard";
 
 //modal to drawer
 //visible to only status -published
@@ -40,26 +27,6 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
   const COLORS1 = ["#3949AB", "#9CCC65", "#585d73"];
   const COLORS2 = ["#9CCC65", "#B71C1C"];
 
-  // overall success rate alg alg calc hoga a
-  const successRate_alloted = () => {
-    const consumed =
-      allottedData.find((x) => x.name === "Consumed")?.value || 0;
-    const total = allottedData.reduce((sum, i) => sum + i.value, 0);
-
-    if (total === 0) return 0;
-    return ((consumed / total) * 100).toFixed(2);
-  };
-
-  const successRate_consumed = () => {
-    const success =
-      consumptionData.find((f) => f.name === "Success")?.value || 0;
-    const failed = consumptionData.find((f) => f.name === "Failed")?.value || 0;
-
-    if (success + failed === 0) return 0;
-
-    return ((success / (success + failed)) * 100).toFixed(2);
-  };
-
   return (
     <Drawer title="API Dashboard" open={open} size={1000} onClose={onClose}>
       {/* <FilterBar wrap>
@@ -80,65 +47,21 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
 
       <Row gutter={24}>
         <Col span={12}>
-          <CardBox>
-            <CardTitle>Allotted</CardTitle>
-
-            <PieChart width={350} height={380}>
-              <Pie
-                data={allottedData}
-                innerRadius={60}
-                outerRadius={130}
-                dataKey="value"
-                label={renderCustomizedLabel}
-                labelLine={false}
-              >
-                {allottedData.map((_, i) => (
-                  <Cell key={i} fill={COLORS1[i]} />
-                ))}
-              </Pie>
-              <Legend
-                formatter={(value, entry) => {
-                  const { payload } = entry;
-                  return `${value} : ${payload?.value} units`;
-                }}
-              />
-            </PieChart>
-
-            <StatsText>
-              Overall Success Rate: <b>{successRate_alloted()}%</b>
-            </StatsText>
-          </CardBox>
+          <DashboardPieCard
+            title="Allotted"
+            data={allottedData}
+            colors={COLORS1}
+            successKey="Consumed"
+          />
         </Col>
 
         <Col span={12}>
-          <CardBox>
-            <CardTitle>Consumption</CardTitle>
-
-            <PieChart width={350} height={380}>
-              <Pie
-                data={consumptionData}
-                innerRadius={60}
-                outerRadius={130}
-                dataKey="value"
-                label={renderCustomizedLabel}
-                labelLine={false}
-              >
-                {consumptionData.map((_, i) => (
-                  <Cell key={i} fill={COLORS2[i]} />
-                ))}
-              </Pie>
-              <Legend
-                formatter={(value, entry) => {
-                  const { payload } = entry;
-                  return `${value} : ${payload?.value} units`;
-                }}
-              />
-            </PieChart>
-
-            <StatsText>
-              Overall Success Rate: <b>{successRate_consumed()}%</b>
-            </StatsText>
-          </CardBox>
+          <DashboardPieCard
+            title="Consumption"
+            data={consumptionData}
+            colors={COLORS2}
+            successKey="Success"
+          />
         </Col>
       </Row>
     </Drawer>

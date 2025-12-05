@@ -10,7 +10,6 @@ const Sidebar: React.FC = () => {
   const findActiveKey = () => {
     const pathname = location.pathname;
 
-    // "/" should behave like "/dashboard"
     const currentPath = pathname === "/" ? "/dashboard" : pathname;
 
     const exact = appRoutes.find((r) => r.path === currentPath);

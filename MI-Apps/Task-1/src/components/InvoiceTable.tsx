@@ -1,51 +1,12 @@
 import { Table, Dropdown, Button } from "antd";
-import styled from "styled-components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeOutlined, MoreOutlined } from "@ant-design/icons";
 import type { InvoiceData } from "../data/InvoiceData";
 import { useState } from "react";
 import type { InvoiceTableProps } from "../Constants/Interface/InvoiceTable.interface";
-
-const TableWrapper = styled.div`
-  margin-top: 10px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
-
-  .ant-table-pagination {
-    width: 100%;
-    display: flex !important;
-    /* justify-content: center !important; */
-    /* justify-content:space-evenly !important; */
-    justify-content: space-between !important;
-    align-items: center;
-    padding-left:  24px;
-    padding-right:  24px;
-  }
-
-  .ant-pagination-total-text {
-    
-    order: -1; 
-    margin-right: auto; 
-    align-self: center;
-  }
-  .ant-pagination-options {
-    order: 1; 
-    margin-left: auto;
-    align-self: center;
-  }
-  .ant-pagination {
-    order: 0;
-    margin: 0 auto;
-  }
+import { TableWrapper } from "../Styled/InvoiceTable.styled";
 
 
-
-  .ant-table-thead > tr > th {
-    background: #e7e5e5 !important;
-    color: #444;
-    padding: 10px 12px !important;
-    border-bottom: 1px solid #e8e8e8 !important;
-  }
-`;
 
 const InvoiceTable = ({
   data,

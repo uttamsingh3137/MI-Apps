@@ -2,7 +2,7 @@ import { Drawer, Descriptions } from "antd";
 import { StyledDescriptions } from "../Styled/InvoiceViewDrawer.styled";
 import type { InvoiceViewDrawerProps } from "../Constants/Interface/InvoiceViewDrawer.interface";
 
-/* Push close button to the far right */
+
 
 
 
