@@ -1,16 +1,17 @@
-/* Compact table rows */
 .ant-table-tbody > tr > td {
-  padding: 6px 8px !important;   /* Default is 16px */
+  padding: 6px 8px !important;
   height: 32px !important;
 }
 
-/* Compact table header */
 .ant-table-thead > tr > th {
   padding: 6px 8px !important;
   height: 32px !important;
 }
 
-/* Reduce row height even more */
 .ant-table-row {
   height: 32px !important;
+}
+
+.ant-drawer-header .ant-drawer-close {
+  order: 999 !important;
 }

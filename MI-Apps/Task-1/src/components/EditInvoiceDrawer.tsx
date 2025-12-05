@@ -1,26 +1,29 @@
 import { Drawer, Form, Input } from "antd";
-
 import { useEffect, useState } from "react";
 import type { InvoiceData } from "../data/InvoiceData";
 import { ReadOnlyInput, SaveButton } from "../Styled/EditInvoiceDrawer.styled";
 import type { EditInvoiceDrawerProps } from "../Constants/Interface/EditInvoiceDrawer.interface";
 
-
-
-
-const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerProps) => {
-
+const EditInvoiceDrawer = ({
+  open,
+  record,
+  onClose,
+  onSave,
+}: EditInvoiceDrawerProps) => {
   const [localRecord, setLocalRecord] = useState<InvoiceData | null>(record);
   const [customerError, setCustomerError] = useState("");
   const [supplierError, setSupplierError] = useState("");
 
   // Update krne ke liye local state whenever record changes
   useEffect(() => {
-    setLocalRecord(record);
-  }, [record]);
+    if (open) {
+      setCustomerError("");
+      setSupplierError("");
+      setLocalRecord(record);
+    }
+  }, [open, record]);
 
   if (!localRecord) return null;
-
 
   const validateGST = (field: "customer" | "supplier", value: string) => {
     if (field === "customer") {
@@ -52,7 +55,14 @@ const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerP
   };
 
   return (
-    <Drawer title="Edit Invoice Details" size={720} open={open} onClose={onClose}>
+    <Drawer
+      title="Edit Invoice Details"
+      size={720}
+      open={open}
+      onClose={onClose}
+      maskClosable={false}
+      keyboard={false}
+    >
       <Form layout="vertical">
         <Form.Item label="Invoice No">
           <ReadOnlyInput value={localRecord.invoiceNo} readOnly />
@@ -103,7 +113,7 @@ const EditInvoiceDrawer = ({ open, record, onClose, onSave }: EditInvoiceDrawerP
 
         <SaveButton
           type="primary"
-          disabled={!!customerError || !!supplierError}  //prop - disable ki conditions pass krne ke liyee
+          disabled={!!customerError || !!supplierError} //prop - disable ki conditions pass krne ke liyee
           onClick={() => {
             onSave(localRecord);
             onClose();

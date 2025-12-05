@@ -7,37 +7,29 @@ import {
 } from "@ant-design/icons";
 import DashboardPage from "../pages/Dashboard";
 import HomePage from "../pages/HomePage";
+
 // import DataImportPage from "../pages/DataImport";
 // import GstReturnPage from "../pages/GstReturn";
 // import NoticesPage from "../pages/Notices";
 // import SettingsPage from "../pages/Settings";
 
-/**
- * Single source of truth for menu + routing.
- * - key: used for Menu selectedKey
- * - path: router path
- * - label: menu label
- * - icon: menu icon
- * - title: header title (optional — else falls back to label)
- * - element: React element for route rendering
- */
+
 export const appRoutes = [
+
+ {
+  key: "home",
+  path: "/home",
+  label: "Home",
+  element: <HomePage />
+},
   {
-    key: "home",
-    path: "/",
-    label: "Home",
-    icon: null,
-    title: "Home",
-    element: <HomePage />,
-  },
-  {
-    key: "dashboard",
-    path: "/dashboard",
-    label: "Dashboard",
-    icon: <DashboardOutlined />,
-    title: "Dashboard",
-    element: <DashboardPage />,
-  },
+  key: "dashboard",
+  path: "/dashboard",
+  label: "Dashboard",
+  icon: <DashboardOutlined />,
+  title: "Dashboard",
+  element: <DashboardPage />
+},
   {
     key: "data-import",
     path: "/data-import",

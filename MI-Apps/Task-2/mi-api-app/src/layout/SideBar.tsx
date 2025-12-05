@@ -10,10 +10,14 @@ const Sidebar: React.FC = () => {
   const findActiveKey = () => {
     const pathname = location.pathname;
 
-    const exact = appRoutes.find((r) => r.path === pathname);
+    // "/" should behave like "/dashboard"
+    const currentPath = pathname === "/" ? "/dashboard" : pathname;
+
+    const exact = appRoutes.find((r) => r.path === currentPath);
     if (exact) return exact.key;
+
     const prefix = appRoutes.find(
-      (r) => r.path !== "/" && pathname.startsWith(r.path)
+      (r) => r.path !== "/" && currentPath.startsWith(r.path)
     );
     if (prefix) return prefix.key;
 
@@ -25,7 +29,7 @@ const Sidebar: React.FC = () => {
   return (
     <StyledSider width={220}>
       <Brand>
-        <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+        <Link to="/home" style={{ color: "inherit", textDecoration: "none" }}>
           Masters India
         </Link>
       </Brand>

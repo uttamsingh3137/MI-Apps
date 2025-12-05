@@ -30,7 +30,8 @@ const RADIAN = Math.PI / 180;
         {payload?.name}
       </tspan>
       <tspan x={x} dy="12">
-        {payload?.value} ({((percent ?? 0) * 100).toFixed(0)}%)
+        {/* {payload?.value}  */}
+        {((percent ?? 0) * 100).toFixed(0)}%
       </tspan>
     </text>
   );

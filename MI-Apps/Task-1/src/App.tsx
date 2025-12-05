@@ -1,13 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import HeaderTabs from "./components/HeaderTabs";
-import FilterBar, { type FilterValues } from "./components/FilterBar";
+import FilterBar from "./components/FilterBar";
 import InvoiceTable from "./components/InvoiceTable";
 import { dummyData } from "./data/dummyData";
 import type { InvoiceData } from "./data/InvoiceData";
 import "./App.css";
 import InvoiceViewDrawer from "./components/InvoiceViewDrawer";
 import EditInvoiceDrawer from "./components/EditInvoiceDrawer";
+import type { FilterValues } from "./Constants/Interface/FilterBar.interface";
 
 const AppWrapper = styled.div`
   padding: 20px;

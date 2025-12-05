@@ -1,7 +1,6 @@
 import { Button, Select, Space } from "antd";
 import styled from "styled-components";
 
-
 export const FilterBar = styled(Space)`
   margin-bottom: 20px;
 `;
@@ -11,7 +10,12 @@ export const CardBox = styled.div`
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
 `;
 
 export const CardTitle = styled.h3`
@@ -30,3 +34,5 @@ export const StyledSelect = styled(Select)`
 export const StyledButton = styled(Button)`
   min-width: 110px;
 `;
+
+

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Select, DatePicker, Drawer } from "antd";
+import { Row, Col, Drawer } from "antd";
 import {
   PieChart,
   Pie,
@@ -8,7 +8,11 @@ import {
   Legend,
 } from "recharts";
 // import styled from "styled-components";
-import { FilterBar , CardBox ,CardTitle , StatsText , StyledSelect , StyledButton} from "../../Styled/ApiDashboard.styled";
+import {
+  CardBox,
+  CardTitle,
+  StatsText,
+} from "../../Styled/ApiDashboard.styled";
 import renderCustomizedLabel from "./Customised Label/CustomisedLabel";
 import type { Props } from "../../Constants/Interfaces/ApiDashboard.interface";
 
@@ -17,18 +21,13 @@ import type { Props } from "../../Constants/Interfaces/ApiDashboard.interface";
 //success rate calculate krna h
 //tooltip values ko inside chart show krna h
 
-const { RangePicker } = DatePicker;
-
-
-
-
+// const { RangePicker } = DatePicker;
 
 //rechart - customized label
 
-
 const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
   const allottedData = [
-    { name: "Consumed", value: 40 },
+    { name: "Consumed", value: 60 },
     { name: "Remaining", value: 40 },
     { name: "Extra", value: 20 },
   ];
@@ -63,7 +62,7 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
 
   return (
     <Drawer title="API Dashboard" open={open} size={1000} onClose={onClose}>
-      <FilterBar wrap>
+      {/* <FilterBar wrap>
         <StyledSelect placeholder="Select Business">
           <Select.Option value="all">All</Select.Option>
         </StyledSelect>
@@ -77,14 +76,14 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
         <StyledButton type="primary">Submit</StyledButton>
         <StyledButton>Download Logs</StyledButton>
         <StyledButton>View Usage</StyledButton>
-      </FilterBar>
+      </FilterBar> */}
 
       <Row gutter={24}>
         <Col span={12}>
           <CardBox>
             <CardTitle>Allotted</CardTitle>
 
-            <PieChart width={450} height={400}>
+            <PieChart width={350} height={380}>
               <Pie
                 data={allottedData}
                 innerRadius={60}
@@ -97,7 +96,12 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
                   <Cell key={i} fill={COLORS1[i]} />
                 ))}
               </Pie>
-              <Legend />
+              <Legend
+                formatter={(value, entry) => {
+                  const { payload } = entry;
+                  return `${value} : ${payload?.value} units`;
+                }}
+              />
             </PieChart>
 
             <StatsText>
@@ -110,7 +114,7 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
           <CardBox>
             <CardTitle>Consumption</CardTitle>
 
-            <PieChart width={450} height={400}>
+            <PieChart width={350} height={380}>
               <Pie
                 data={consumptionData}
                 innerRadius={60}
@@ -123,7 +127,12 @@ const ApiDashboardDrawer: React.FC<Props> = ({ open, onClose }) => {
                   <Cell key={i} fill={COLORS2[i]} />
                 ))}
               </Pie>
-              <Legend />
+              <Legend
+                formatter={(value, entry) => {
+                  const { payload } = entry;
+                  return `${value} : ${payload?.value} units`;
+                }}
+              />
             </PieChart>
 
             <StatsText>

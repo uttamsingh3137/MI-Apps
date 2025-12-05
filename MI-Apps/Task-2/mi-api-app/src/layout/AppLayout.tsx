@@ -11,10 +11,8 @@ const AppLayout = () => {
   return (
     <FullLayout>
       <Sidebar />
-
       <MainLayout>
         <HeaderBar />
-
         <StyledContent>
           <Outlet />
         </StyledContent>

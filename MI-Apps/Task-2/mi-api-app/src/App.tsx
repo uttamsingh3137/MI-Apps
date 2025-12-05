@@ -1,8 +1,9 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
 // import HomePage from "./pages/HomePage";
 // import Dashboard from "./pages/Dashboard";
 import appRoutes from "./config/menuConfig";
+import "./App.css";
 
 function App() {
   return (
@@ -18,19 +19,24 @@ function App() {
     //   </Route>
     // </Routes>
     <Routes>
-      <Route path="/" element={<AppLayout />}>
 
-        {/* here updating sidebar and navbar both by using a seperate file menuConfig (appRoutes) , because first i was updating them diffrently. Now they are in sync - from side bar Link is working routing to page and headerbar's text is also updating   */}
-        {appRoutes.map((r) => (
-          <Route
-           key={r.path} path={r.path === "/" ? "" : r.path.slice(1)} element={r.element}
-          />
-        ))}
+  <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
 
-        <Route path="*" element={<div>Page not found</div>} />
-      </Route>
-    </Routes>
+  <Route path="/" element={<AppLayout />}>
+    {appRoutes.map((r) => (
+      <Route
+        key={r.key}
+        path={r.path.replace("/", "")}  // "dashboard", "home", etc
+        element={r.element}
+      />
+    ))}
+
+    <Route path="*" element={<div>Page not found</div>} />
+  </Route>
+
+</Routes>
+
   );
 }
 
