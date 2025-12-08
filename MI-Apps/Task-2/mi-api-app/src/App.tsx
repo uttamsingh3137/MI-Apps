@@ -4,6 +4,7 @@ import AppLayout from "./layout/AppLayout";
 // import Dashboard from "./pages/Dashboard";
 import appRoutes from "./config/menuConfig";
 import "./App.css";
+import { ComplianceCalendar } from "./components/ComplianceCalender/ComplianceCalender";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
     <Routes>
 
   <Route path="/" element={<Navigate to="/dashboard" replace />} />
+  <Route path="/calendar" element={<ComplianceCalendar/>} />
+
+
 
 
   <Route path="/" element={<AppLayout />}>

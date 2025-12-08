@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import DashboardPage from "../pages/Dashboard";
 import HomePage from "../pages/HomePage";
+import { ComplianceCalendar } from "../components/ComplianceCalender/ComplianceCalender";
 
 // import DataImportPage from "../pages/DataImport";
 // import GstReturnPage from "../pages/GstReturn";
@@ -28,7 +29,7 @@ export const appRoutes = [
   label: "Dashboard",
   icon: <DashboardOutlined />,
   title: "Dashboard",
-  element: <DashboardPage />
+  element: <ComplianceCalendar/>
 },
   {
     key: "data-import",
@@ -36,7 +37,7 @@ export const appRoutes = [
     label: "Data Import",
     icon: <DatabaseOutlined />,
     title: "Data Import",
-    element: <div>Data Import</div>,
+    element: <DashboardPage />,
   },
   {
     key: "gst-return",
