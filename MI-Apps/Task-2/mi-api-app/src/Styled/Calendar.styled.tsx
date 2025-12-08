@@ -16,20 +16,24 @@ export const DayCellWrapper = styled.div<{ selected?: boolean; faded?: boolean }
   border-radius: 10px;
   padding: 8px;
   height: 110px;
+
   background: ${({ faded }) => (faded ? "#fafafa" : "#fff")};
   border: ${({ selected }) => (selected ? "2px solid #165DFF" : "1px solid #eee")};
+
   cursor: pointer;
   transition: 0.2s;
 
   display: flex;
   flex-direction: column;
-  
+
   min-height: 0;
+  overflow: hidden; 
 
   &:hover {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
   }
 `;
+
 
 export const DayNumber = styled.div`
   font-size: 14px;

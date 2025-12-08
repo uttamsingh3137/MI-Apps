@@ -6,7 +6,6 @@ import {
   MainLayout,
   StyledContent,
 } from "../Styled/AppLayout.styled";
-// import { ComplianceCalendar } from "../components/ComplianceCalender/ComplianceCalender";
 
 const AppLayout = () => {
   return (
