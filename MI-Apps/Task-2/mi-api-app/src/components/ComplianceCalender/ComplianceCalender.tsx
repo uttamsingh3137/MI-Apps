@@ -64,7 +64,7 @@ export const ComplianceCalendar = () => {
 
           <CalendarGrid
             month={month}
-            events={eventsForMonth}
+            events={MOCK_EVENTS}
             selectedDate={selectedDate}
             onSelectDate={setSelectedDate}
             onEventClick={handleEventClick}
