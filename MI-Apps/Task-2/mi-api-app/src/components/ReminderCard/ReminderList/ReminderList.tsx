@@ -2,11 +2,7 @@ import { Typography } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import { ReminderCard } from "../ReminderCard";
 import type { Props } from "../../../Constants/CalendarData/ReminderList";
-import {
-  Header,
-  ScrollArea,
-  Wrapper,
-} from "../../../Styled/ReminderList.styled";
+import { Header, ScrollArea, Wrapper } from "../../../Styled/ReminderList.styled";
 
 const { Text } = Typography;
 
@@ -15,9 +11,7 @@ export const ReminderList: React.FC<Props> = ({ reminders }) => {
     <Wrapper>
       <Header>
         <CalendarOutlined style={{ fontSize: 16 }} />
-        <Text strong style={{ fontSize: 16 }}>
-          Upcoming Reminders
-        </Text>
+        <Text strong style={{ fontSize: 16 }}>Upcoming Reminders</Text>
       </Header>
 
       <ScrollArea>

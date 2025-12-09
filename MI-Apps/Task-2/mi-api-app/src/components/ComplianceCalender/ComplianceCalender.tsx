@@ -11,8 +11,6 @@ import { ReminderList } from "../ReminderCard/ReminderList/ReminderList";
 import { EventDetailsModal } from "../EventDetailsModal/EventDetailsModal";
 import { MOCK_EVENTS } from "../../Constants/CalendarData/MOCK_EVENTS";
 
-
-
 const convertEventsToReminders = (events: CalendarEvent[]): ReminderItem[] => {
   return events.map((ev) => ({
     id: ev.id,
@@ -37,24 +35,30 @@ export const ComplianceCalendar = () => {
     setEventModalOpen(true);
   };
 
-  const eventsForMonth = useMemo(
-    () => MOCK_EVENTS.filter((ev) => isSameMonth(new Date(ev.date), month)),
+  // const eventsForMonth = useMemo(
+  //   () => MOCK_EVENTS.filter((ev) => isSameMonth(new Date(ev.date), month)),
+  //   [month]
+  // );
+
+  const allEvents = MOCK_EVENTS;
+
+  const remindersForMonth: ReminderItem[] = useMemo(
+    () =>
+      convertEventsToReminders(
+        allEvents.filter((ev) => isSameMonth(new Date(ev.date), month))
+      ),
     [month]
   );
 
-  const remindersForMonth = useMemo(
-    () => convertEventsToReminders(eventsForMonth),
-    [eventsForMonth]
-  );
-
   return (
-    <Row gutter={24}>
-      <Col span={6}>
+    // <Row gutter={24} style={{ height: "100%", minHeight: "600px" }}>
+    <Row  gutter={24} style={{ height: "calc(100vh - 150px)" }}>
+      <Col span={6} style={{ height: "100%" }}>
         <ReminderList reminders={remindersForMonth} />
       </Col>
 
-      <Col span={18}>
-        <Card style={{ borderRadius: 12, padding: 16 }}>
+      <Col span={18} style={{ height: "100%" }}>
+        <Card style={{ borderRadius: 12, height: "100%", display: "flex", flexDirection: "column" , overflow: "hidden",}}>
           <CalendarHeader
             month={month}
             onPrev={() => setMonth(subMonths(month, 1))}
@@ -62,16 +66,18 @@ export const ComplianceCalendar = () => {
             onRefresh={() => console.log("Refresh clicked")}
           />
 
-          <CalendarGrid
+          <div style={{ flex: 1, overflow: "hidden" }}>
+          <CalendarGrid 
             month={month}
-            events={MOCK_EVENTS}
+            events={allEvents}
             selectedDate={selectedDate}
             onSelectDate={setSelectedDate}
             onEventClick={handleEventClick}
+            onMonthChange={(newMonth) => setMonth(newMonth)} 
           />
+          </div>
 
           <EventDetailsModal
-
             open={eventModalOpen}
             onClose={() => setEventModalOpen(false)}
             event={selectedEvent}

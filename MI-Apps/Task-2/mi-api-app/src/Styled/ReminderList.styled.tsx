@@ -1,30 +1,36 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 16px;
+  height: 100%;                      
+  display: flex;                    
+  flex-direction: column;           
   background: #fff;
   border-radius: 14px;
   border: 1px solid #e5e6eb;
-  height: 100%;
+  padding: 16px;
+  overflow: hidden;                  
 `;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 `;
 
 export const ScrollArea = styled.div`
-  max-height: calc(100vh - 250px);
-  overflow-y: auto;
-  padding-right: 6px;
+  flex: 1 1 auto;                   
+  overflow-y: auto;                  
+  padding-right: 4px;
 
   &::-webkit-scrollbar {
-    width: 4px;
+    width: 4px;                      
   }
   &::-webkit-scrollbar-thumb {
-    background: #d0d3d8;
-    border-radius: 50px;
+    background: #c7c9cf;
+    border-radius: 8px;
   }
+
+  scrollbar-width: thin;            
+  scrollbar-color: #c7c9cf transparent;
 `;
