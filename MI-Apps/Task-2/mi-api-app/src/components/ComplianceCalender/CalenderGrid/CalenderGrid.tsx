@@ -58,6 +58,7 @@ export const CalendarGrid: React.FC<Props> = ({
               onSelectDate(day);
             }}
             onEventClick={onEventClick}
+            onMonthChange={onMonthChange} 
           />
         );
       })}

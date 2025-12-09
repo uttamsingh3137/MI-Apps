@@ -7,4 +7,5 @@ export interface Props {
   selectedDate: Date | null;
   onSelect: () => void;
   onEventClick: (event: CalendarEvent) => void;
+  onMonthChange: (newMonth: Date) => void;
 }

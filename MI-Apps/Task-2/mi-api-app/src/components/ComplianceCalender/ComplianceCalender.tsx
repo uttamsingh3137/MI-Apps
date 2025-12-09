@@ -11,6 +11,7 @@ import { ReminderList } from "../ReminderCard/ReminderList/ReminderList";
 import { EventDetailsModal } from "../EventDetailsModal/EventDetailsModal";
 import { MOCK_EVENTS } from "../../Constants/CalendarData/MOCK_EVENTS";
 
+
 const convertEventsToReminders = (events: CalendarEvent[]): ReminderItem[] => {
   return events.map((ev) => ({
     id: ev.id,
@@ -52,13 +53,13 @@ export const ComplianceCalendar = () => {
 
   return (
     // <Row gutter={24} style={{ height: "100%", minHeight: "600px" }}>
-    <Row  gutter={24} style={{ height: "calc(100vh - 150px)" }}>
+    <Row  gutter={24} style={{  minHeight: "750px", height: "calc(-150px + 100vh)" }}>
       <Col span={6} style={{ height: "100%" }}>
         <ReminderList reminders={remindersForMonth} />
       </Col>
 
       <Col span={18} style={{ height: "100%" }}>
-        <Card style={{ borderRadius: 12, height: "100%", display: "flex", flexDirection: "column" , overflow: "hidden",}}>
+        <Card style={{ borderRadius: 12, height: "100%", display: "flex", flexDirection: "column" , }}>
           <CalendarHeader
             month={month}
             onPrev={() => setMonth(subMonths(month, 1))}
@@ -66,7 +67,7 @@ export const ComplianceCalendar = () => {
             onRefresh={() => console.log("Refresh clicked")}
           />
 
-          <div style={{ flex: 1, overflow: "hidden" }}>
+          <div style={{ flex: 1}}>
           <CalendarGrid 
             month={month}
             events={allEvents}

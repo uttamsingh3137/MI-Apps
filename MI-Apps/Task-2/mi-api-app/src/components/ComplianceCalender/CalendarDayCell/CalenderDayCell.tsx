@@ -18,12 +18,22 @@ export const CalendarDayCell: React.FC<Props> = ({
   selectedDate,
   onSelect,
   onEventClick,
+  onMonthChange
 }) => {
+
+
+
   return (
     <DayCellWrapper
       faded={!isCurrentMonth}
       selected={selectedDate ? isSameDay(date, selectedDate) : false}
-      onClick={onSelect}
+      onClick={()=>{
+        if(!isCurrentMonth){
+          onMonthChange(date)
+          return;
+        }
+        onSelect();
+      }}
     >
       <DayNumber>{date.getDate()}</DayNumber>
 
@@ -33,7 +43,11 @@ export const CalendarDayCell: React.FC<Props> = ({
             <EventTag
               onClick={(e) => {
                 e.stopPropagation(); 
-                onEventClick(ev);
+                if(isCurrentMonth){
+                  onEventClick(ev);
+                }
+                onMonthChange(date)
+                
               }}
             >
               {ev.title}

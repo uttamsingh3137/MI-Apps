@@ -15,7 +15,7 @@ export const GridWrapper = styled.div`
 export const DayCellWrapper = styled.div<{ selected?: boolean; faded?: boolean }>`
   border-radius: 10px;
   padding: 8px;
-  height: 95px;
+  height: 115px;
 
   background: ${({ faded }) => (faded ? "#fafafa" : "#fff")};
   border: ${({ selected }) => (selected ? "2px solid #165DFF" : "1px solid #eee")};
